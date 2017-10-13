@@ -25,7 +25,7 @@ public class Recipe {
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="recipe")
-    private Set<Ingrediant> ingrediants;
+    private Set<Ingredient> ingredients;
 
     public Integer getPrepTime() {
         return prepTime;
@@ -107,11 +107,11 @@ public class Recipe {
         this.recipe = recipe;
     }
 
-    public Set<Ingrediant> getIngrediants() {
-        return ingrediants;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngrediants(Set<Ingrediant> ingrediants) {
-        this.ingrediants = ingrediants;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
