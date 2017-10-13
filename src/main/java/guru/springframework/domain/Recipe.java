@@ -17,6 +17,7 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
+    private String description;
 
     @Lob
     private Byte[] image;
@@ -139,5 +140,13 @@ public class Recipe {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
