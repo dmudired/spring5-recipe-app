@@ -16,6 +16,9 @@ public class Ingredient {
         this.unitOfMeasure = unitOfMeasure;
     }
 
+    public Ingredient() {
+
+    }
     private String description;
 
     private BigDecimal amount;

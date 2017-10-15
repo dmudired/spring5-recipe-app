@@ -4,13 +4,17 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RecipeBootStrap {
+@Component
+public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
     private CategoryRepository categoryRepository;
     private UnitOfMeasureRepository unitOfMeasureRepository;
@@ -56,7 +60,7 @@ public class RecipeBootStrap {
             throw new RuntimeException("Expected UOM Not found");
         }
 
-        Optional<UnitOfMeasure> cupsUOMOptional = unitOfMeasureRepository.findByDescription("Cups");
+        Optional<UnitOfMeasure> cupsUOMOptional = unitOfMeasureRepository.findByDescription("Cup");
         if(!cupsUOMOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not found");
         }
@@ -131,7 +135,6 @@ public class RecipeBootStrap {
                 "\n" +
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4vQ08IdSC");
-
         guacRecipe.setNotes(guacNotes);
         guacRecipe.getIngredients().add(new Ingredient("ripe avadocos", new BigDecimal(2), eachUom));
         guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(1), teaSpoonUom));
@@ -163,6 +166,7 @@ public class RecipeBootStrap {
                 "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4vQ4vpelx");
         Notes tacosNotes = new Notes();
         tacosNotes.setRecipeNotes("If you make this recipe, snap a pic and hashtag it #simplyrecipes — We love to see your creations");
+
         tacosRecipe.setNotes(tacosNotes);
         tacosRecipe.getIngredients().add(new Ingredient("ancho chili powder", new BigDecimal(2), tableSpoonUom));
         tacosRecipe.getIngredients().add(new Ingredient("dried oregano", new BigDecimal(1), tableSpoonUom));
@@ -179,9 +183,18 @@ public class RecipeBootStrap {
         tacosRecipe.getCategories().add(chineseCat);
         tacosRecipe.getCategories().add(indianCat);
 
+        tacosRecipe.setDescription("Tasty Taco");
+        tacosRecipe.setPrepTime(5);
+        tacosRecipe.setCookTime(15);
+        tacosRecipe.setDifficulty(Difficulty.MEDIUM);
+
         recipies.add(tacosRecipe);
 
         return recipies;
     }
 
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        recipeRepository.saveAll(getRecipies());
+    }
 }

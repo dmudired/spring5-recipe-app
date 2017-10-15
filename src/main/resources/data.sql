@@ -3,6 +3,8 @@ INSERT INTO category (description) VALUES ('ITALIAN');
 INSERT INTO category (description) VALUES ('MEXICAN');
 INSERT INTO category (description) VALUES ('INDIAN');
 INSERT INTO category (description) VALUES ('FAST FOOD');
+INSERT INTO category (description) VALUES ('CHINESE');
+
 
 
 INSERT INTO unit_of_measure (description) VALUES ('TeaSpoon');
